@@ -1,0 +1,85 @@
+<?php if($package->types->slug =="puerta-a-puerta"): ?>
+<thead>
+	<tr>
+		<th>Carrier</th>
+		<th>Destino</th>
+		<th>Numero de referencia</th>
+		<th>Modo de envio</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td><?php echo $package->descs->carrier; ?></td>
+		<td><?php echo $package->descs->dest; ?></td>
+		<td>
+			<?php if(empty($package->descs->reference_number)): ?>
+				Sin especificar
+			<?php else: ?>
+				<?php echo $package->descs->reference_number; ?>
+
+			<?php endif; ?>
+		</td>
+		<td><?php echo $package->descs->ship_mode; ?></td>
+	</tr>
+</tbody>
+<?php elseif($package->types->slug =="aereos"): ?>
+<thead>
+	<tr>
+		<th>Tipo de carga</th>
+		<th>Aeropuerto de salida</th>
+		<th>Aeropuerto de destino</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td><?php echo $package->descs->charge_type; ?></td>
+		<td><?php echo $package->descs->airport_depart; ?></td>
+		<td><?php echo $package->descs->airport_dest; ?></td>
+	</tr>
+</tbody>
+<?php elseif($package->types->slug =="maritimos"): ?>
+<thead>
+	<tr>
+		<th>A notificar</th>
+		<th>Instrucciones de exportación</th>
+		<th>Lugar de recepción</th>
+		<th>Tienda</th>
+		<th>Puerto de carga</th>
+		<th>Lugar de entrega</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<?php if(empty($package->descs->notify_party)): ?>
+			<td>Sin especificar</td>
+		<?php else: ?>
+			<td><?php echo $package->descs->notify_party; ?></td>
+		<?php endif; ?>
+		<?php if(empty($package->descs->export_instructions)): ?>
+			<td>Sin especificar</td>
+		<?php else: ?>
+			<td><?php echo $package->descs->export_instructions; ?></td>
+		<?php endif; ?>
+		<?php if(empty($package->descs->place_of_reception)): ?>
+			<td>Sin especificar</td>
+		<?php else: ?>
+			<td><?php echo $package->descs->place_of_reception; ?></td>
+		<?php endif; ?>
+		<?php if(empty($package->descs->shop_line)): ?>
+			<td>Sin especificar</td>
+		<?php else: ?>
+			<td><?php echo $package->descs->shop_line; ?></td>
+		<?php endif; ?>
+		<?php if(empty($package->descs->port_of_loading)): ?>
+			<td>Sin especificar</td>
+		<?php else: ?>
+			<td><?php echo $package->descs->port_of_loading; ?></td>
+		<?php endif; ?>
+		<?php if(empty($package->descs->place_of_deliver)): ?>
+			<td>Sin especificar</td>
+		<?php else: ?>
+			<td><?php echo $package->descs->place_of_deliver; ?></td>
+		<?php endif; ?>
+	</tr>
+</tbody>
+<?php endif; ?>

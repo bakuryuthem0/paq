@@ -1,0 +1,16 @@
+@mixin transform($type)
+{
+	-webkit-transform: $type;
+	   -moz-transform: $type;
+	    -ms-transform: $type;
+	     -o-transform: $type;
+	        transform: $type;
+}
+@mixin transitions($who, $duration, $transition)
+{
+	-webkit-transition: $who $duration $transition;
+	   -moz-transition: $who $duration $transition;
+	    -ms-transition: $who $duration $transition;
+	     -o-transition: $who $duration $transition;
+	        transition: $who $duration $transition;
+}

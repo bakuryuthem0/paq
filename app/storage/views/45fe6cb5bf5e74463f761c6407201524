@@ -1,0 +1,166 @@
+<?php $__env->startSection('content'); ?>
+	<div class="">
+		<div class="col-xs-12">
+			<h2 class="text-center"></h2>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-xs-12 col-sm-10 center-block">
+			<div class="panel panel-default login-panel">
+				<div class="panel-heading">
+					<h3 class="text-center">Nuevo paquete</h3>
+				</div>
+				<div class="panel-body">
+					<?php if(count($errors->getMessageBag()) > 0): ?>
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<?php foreach($errors->all() as $err): ?>
+			                    <li><?php echo $err; ?></li>
+			                <?php endforeach; ?>
+						</ul>
+					</div>
+					<?php endif; ?>
+					<?php if(Session::has('success')): ?>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<?php echo Session::get('success'); ?>
+
+					</div>
+					<?php endif; ?>
+					<form method="POST" action="<?php echo URL::to('administrador/nuevo-paquete/enviar'); ?>">
+						<div class="col-xs-12 col-md-6 input-field">
+							<label>Tipo de envio (*)</label>
+						  	<select class="form-control validate-input type" name="type" data-name="tipo de envio" data-target=".partial-container" data-url="<?php echo URL::to('administrador/cargar-campos'); ?>">
+								<option value="">Seleccione una opción</option>
+								<?php foreach($types as $t): ?>
+								<option value="<?php echo $t->id; ?>" <?php if(Input::old('type') && Input::old('type') == $t->id): ?> selected <?php endif; ?>><?php echo $t->name; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div class="col-xs-12 col-md-6 input-field">
+							<label>Remitente (*)</label>
+						  	<select class="form-control validate-input selectpicker" name="shipper" data-name="remitente" data-show-subtext="true" data-live-search="true">
+								<option value="">Seleccione una opción</option>
+								<?php foreach($shippers as $s): ?>
+								<option value="<?php echo $s->id; ?>" <?php if(Input::old('shipper') && Input::old('shipper') == $s->id): ?> selected <?php endif; ?> data-subtext="<?php echo $s->phone; ?>"><?php echo $s->name; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div class="col-xs-12 col-md-4 input-field">
+							<label>Alto <small>pulg</small>(*)</label>
+						  	<input type="number" name="height" class="form-control validate-input" placeholder="Alto" value="<?php echo Input::old('height'); ?>" data-name="peso">
+						</div>
+						<div class="col-xs-12 col-md-4 input-field">
+							<label>Ancho <small>pulg</small>(*)</label>
+						  	<input type="number" name="width" class="form-control validate-input" placeholder="Ancho" value="<?php echo Input::old('width'); ?>" data-name="peso">
+						</div>
+						<div class="col-xs-12 col-md-4 input-field">
+							<label>Largo <small>pulg</small>(*)</label>
+						  	<input type="number" name="length" class="form-control validate-input" placeholder="Largo" value="<?php echo Input::old('length'); ?>" data-name="peso">
+						</div>
+						<div class="col-xs-12 input-field">
+							<label>Peso <small>Lb</small>(*)</label>
+						  	<input type="number" name="weight" class="form-control validate-input" placeholder="Peso" value="<?php echo Input::old('weight'); ?>" data-name="peso">
+						</div>
+						<div class="col-xs-12 input-field">
+							<label>Ubicación (*)</label>
+						  	<input type="text" name="location" class="form-control validate-input" placeholder="Ubicación" value="<?php echo Input::old('location'); ?>" data-name="ubicación">
+						</div>
+						<div class="col-xs-12 input-field">
+							<label>Observación</label>
+						  	<input type="text" name="observation" class="form-control" placeholder="Observación" value="<?php echo Input::old('observation'); ?>" data-name="observación">
+						</div>
+						<div class="col-xs-12 input-field">
+							<label>Cantidad de cajas (*)</label>
+						  	<input type="number" name="box_qty" class="form-control validate-input" placeholder="Cantidad de cajas" value="<?php echo Input::old('box_qty'); ?>" data-name="cantidad de cajas">
+						</div>
+						<div class="col-xs-12 input-field">
+							<label>Usuario (*)</label>
+							<select class="form-control validate-input selectpicker" name="user" data-name="usuario" data-show-subtext="true" data-live-search="true">
+								<option value="">Seleccione una opción</option>
+								<?php foreach($users as $u): ?>
+									<option value="<?php echo $u->id; ?>" <?php if(Input::old('user') && Input::old('user') == $u->id): ?> selected <?php endif; ?> data-subtext="<?php echo $u->email; ?>"><?php echo ucfirst($u->username); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div class="col-xs-12">
+							<label>Consigna (*)</label>
+							<input type="text" name="consig" class="form-control validate-input" placeholder="Consigna">
+						</div>
+						<div class="partial-container">
+							<?php if(Input::old('type')): ?>
+								<?php if(Input::old('dest')): ?>
+									<input type="hidden" class="input_old" name="dest" value="<?php echo Input::old('dest'); ?>"> 
+								<?php endif; ?>
+								<?php if(Input::old('ref_no')): ?>
+									<input type="hidden" class="input_old" name="ref_no" value="<?php echo Input::old('ref_no'); ?>"> 
+								<?php endif; ?>
+								<?php if(Input::old('carrier')): ?>
+									<input type="hidden" class="input_old" name="carrier" value="<?php echo Input::old('carrier'); ?>"> 
+								<?php endif; ?>
+								<?php if(Input::old('ship_mode')): ?>
+									<input type="hidden" class="input_old" name="ship_mode" value="<?php echo Input::old('ship_mode'); ?>"> 
+								<?php endif; ?>
+								<?php if(Input::old('charge_type')): ?>
+									<input type="hidden" class="input_old" name="charge_type" value="<?php echo Input::old('charge_type'); ?>">
+								<?php endif; ?>
+								<?php if(Input::old('airport_depart')): ?>
+									<input type="hidden" class="input_old" name="airport_depart" value="<?php echo Input::old('airport_depart'); ?>">
+								<?php endif; ?>
+								<?php if(Input::old('airport_dest')): ?>
+									<input type="hidden" class="input_old" name="airport_dest" value="<?php echo Input::old('airport_dest'); ?>">
+								<?php endif; ?>
+								<?php if(Input::old('notify_party')): ?>
+									<input type="hidden" class="input_old" name="notify_party" value="<?php echo Input::old('notify_party'); ?>">
+								<?php endif; ?>
+								<?php if(Input::old('export_instructions')): ?>
+									<input type="hidden" class="input_old" name="export_instructions" value="<?php echo Input::old('export_instructions'); ?>">
+								<?php endif; ?>
+								<?php if(Input::old('place_of_reception')): ?>
+									<input type="hidden" class="input_old" name="place_of_reception" value="<?php echo Input::old('place_of_reception'); ?>">
+								<?php endif; ?>
+								<?php if(Input::old('shop_line')): ?>
+									<input type="hidden" class="input_old" name="shop_line" value="<?php echo Input::old('shop_line'); ?>">
+								<?php endif; ?>
+								<?php if(Input::old('port_of_loading')): ?>
+									<input type="hidden" class="input_old" name="port_of_loading" value="<?php echo Input::old('port_of_loading'); ?>">
+								<?php endif; ?>
+								<?php if(Input::old('place_of_deliver')): ?>
+									<input type="hidden" class="input_old" name="place_of_deliver" value="<?php echo Input::old('place_of_deliver'); ?>">
+								<?php endif; ?>
+							<?php endif; ?>
+						</div>
+						<?php echo Form::token(); ?>
+
+					</form>
+					<div class="col-xs-12 input-field">
+						<button class="btn btn-success pull-right btn-submit">Enviar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('postscript'); ?>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+<?php if(Input::old('type')): ?>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		var btn = $('.type');
+	    var dataPost = {
+	      id : btn.val()
+	    };
+
+	    $('.input_old').each(function(index, el) {
+	      dataPost[$(el).attr('name')] = $(el).val();      
+	    });
+	    doAjax(btn.data('url'), 'GET', 'html', dataPost, btn, beforeSelectLoad, successSelectLoad, endSelectLoadAjax);
+		});
+</script>
+<?php endif; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

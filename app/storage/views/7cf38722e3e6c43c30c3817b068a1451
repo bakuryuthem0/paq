@@ -1,0 +1,52 @@
+<?php $__env->startSection('content'); ?>
+	<div class="">
+		<div class="col-xs-12">
+			<h2 class="text-center"></h2>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-xs-12 col-sm-8 col-md-6 center-block">
+			<div class="panel panel-default login-panel">
+				<div class="panel-heading">
+					<h3 class="text-center">Cambio de Contraseña</h3>
+				</div>
+				<div class="panel-body">
+					<?php if(count($errors->getMessageBag()) > 0): ?>
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<?php foreach($errors->all() as $err): ?>
+			                    <li><?php echo $err; ?></li>
+			                <?php endforeach; ?>
+						</ul>
+					</div>
+					<?php endif; ?>
+					<?php if(Session::has('success')): ?>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<?php echo Session::get('success'); ?>
+
+					</div>
+					<?php endif; ?>
+					<form method="POST" action="<?php echo URL::to('administrador/ver-usuario/'.$user->id.'/enviar'); ?>">
+						<h3>Usuario:</h3>
+						<p><?php echo $user->username; ?> - <?php echo $user->roles->description; ?></p>
+						<div class="input-field">
+							<label>Contraseña (*)</label>
+						  	<input type="password" name="password" class="form-control validate-input" placeholder="Contraseña" value="<?php echo Input::old('password'); ?>">
+						</div>
+						<div class="input-field">
+							<label>Repita la Contraseña (*)</label>
+						  	<input type="password" name="password_confirmation" class="form-control validate-input" placeholder="Contraseña" value="<?php echo Input::old('password_confirmation'); ?>">
+						</div>
+						<?php echo Form::token(); ?>
+
+					</form>
+					<div class="input-field">
+						<button class="btn btn-success pull-right btn-submit">Enviar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,27 @@
+<div class="table-responsive">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Ubicación</th>
+				<th>Fecha</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<?php echo $package->location; ?>
+
+				</td>
+				<td>
+					<strong>Ubicación Actual</strong>
+				</td>
+			</tr>
+			<?php foreach($locations as $l): ?>
+			<tr>
+				<td><?php echo $l->location; ?></td>
+				<td><?php echo date('d-m-Y',strtotime($l->created_at)); ?></td>
+			</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>

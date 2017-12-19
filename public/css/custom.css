@@ -1,0 +1,73 @@
+body, html {
+  min-height: 100vh; }
+
+.row {
+  margin: 0 !important; }
+
+.center-block {
+  float: none !important; }
+
+.input-group, .input-field {
+  margin-bottom: 1em; }
+
+.login-panel {
+  padding: 2em; }
+
+.content {
+  min-height: 80vh;
+  position: relative; }
+
+.valign-pane {
+  position: absolute;
+  top: 40%;
+  -webkit-transform: translateY(-40%);
+  -moz-transform: translateY(-40%);
+  -ms-transform: translateY(-40%);
+  -o-transform: translateY(-40%);
+  transform: translateY(-40%); }
+
+.margin-1 {
+  margin-top: .5em;
+  margin-bottom: .5em; }
+
+.miniLoader {
+  width: 15px;
+  height: 15px;
+  display: none;
+  margin-right: 10px;
+  text-align: right; }
+  .miniLoader.active {
+    display: inline-block; }
+
+.responseAjax {
+  display: none; }
+  .responseAjax.active {
+    display: block; }
+
+.dropdown-menu .divider {
+  position: relative;
+  overflow: visible; }
+  .dropdown-menu .divider span {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    background-color: #fff;
+    padding: 0px 1em;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%); }
+
+footer {
+  margin-top: 2em; }
+  footer.auth {
+    bottom: 0;
+    width: 100%; }
+  footer .panel {
+    margin-bottom: 0; }
+
+.table th, .table td {
+  text-align: center; }
+
+/*# sourceMappingURL=custom.css.map */

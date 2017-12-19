@@ -1,0 +1,94 @@
+@import "variables.scss";
+@import "mixins.scss";
+
+body,html
+{
+	min-height: 100vh;
+}
+.row
+{
+	margin: 0 !important;
+}
+.center-block
+{
+	float: none !important;
+}
+.input-group, .input-field
+{
+	margin-bottom: 1em;
+}
+.login-panel
+{
+	padding: 2em;
+}
+.content
+{
+	min-height: 80vh;
+	position: relative;
+}
+.valign-pane
+{
+	position: absolute;
+	top: 40%;
+	@include transform(translateY(-40%));
+}
+.margin-1
+{
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+.miniLoader
+{
+	width: 15px;
+	height: 15px;
+	display: none;
+	margin-right: 10px;
+	text-align: right;
+	&.active
+	{
+		display: inline-block;
+	}
+}
+.responseAjax
+{
+	display: none;
+	&.active
+	{
+		display: block;
+	}
+}
+.dropdown-menu .divider
+{
+	position: relative;
+	overflow: visible;
+	span
+	{
+		position: absolute;
+	    top: -10px;
+	    left: 50%;
+	    background-color: #fff;
+	    padding: 0px 1em;
+	    @include transform(translateX(-50%));
+		
+	}
+}
+footer
+{
+	margin-top: 2em;
+	&.auth
+	{
+		bottom: 0;
+		width: 100%;
+	}
+	.panel
+	{
+		margin-bottom: 0;
+	}
+}
+.table 
+{
+	th,td
+	{
+		text-align: center;
+	}
+}

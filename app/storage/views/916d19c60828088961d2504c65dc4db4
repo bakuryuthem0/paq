@@ -1,0 +1,17 @@
+<div class="input-field col-xs-12">
+	<label>Tipo de cargos</label>
+	<select class="form-control validate-input" name="charge_type">
+		<option value="all-charges" <?php if(isset($charge_type) && $charge_type == "all-charges"): ?> selected <?php endif; ?>>All Charges</option>
+		<option value="as-agreed" <?php if(isset($charge_type) && $charge_type == "as-agreed"): ?> selected <?php endif; ?>>As Agreed </option>
+		<option value="freight-only" <?php if(isset($charge_type) && $charge_type == "freight-only"): ?> selected <?php endif; ?>>Freight Only  </option>
+		<option value="mixed" <?php if(isset($charge_type) && $charge_type == "mixed"): ?> selected <?php endif; ?>>Mixed  </option>
+	</select>
+</div>
+<div class="input-field col-xs-12 col-md-6">
+	<label>Aeropuerto de salida</label>
+	<input type="text" name="airport_depart" class="form-control validate-input" <?php if(isset($airport_depart)): ?> value="<?php echo $airport_depart; ?>" <?php endif; ?> placeholder="Aeropuerto de salida">
+</div>
+<div class="input-field col-xs-12 col-md-6">
+	<label>Aeropuerto destino</label>
+	<input type="text" name="airport_dest" class="form-control validate-input" <?php if(isset($airport_dest)): ?> value="<?php echo $airport_dest; ?>" <?php endif; ?> placeholder="Aeropuerto destino">
+</div>

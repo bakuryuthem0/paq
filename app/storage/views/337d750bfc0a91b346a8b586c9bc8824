@@ -1,0 +1,23 @@
+<div class="input-field col-xs-12">
+	<label>Numero de referencia </label>
+	<input type="text" name="ref_no" class="form-control" <?php if(isset($ref_no)): ?> value="<?php echo $ref_no; ?>" <?php endif; ?> placeholder="Numero de referencia">
+</div>
+<div class="input-field col-xs-12 col-md-6">
+	<label>Destino (*)</label>
+	<input type="text" name="dest" class="form-control validate-input" <?php if(isset($dest)): ?> value="<?php echo $dest; ?>" <?php endif; ?> placeholder="Destino">
+</div>
+<div class="input-field col-xs-12 col-md-6">
+	<label>Carrier (*)</label>
+	<input type="text" name="carrier" class="form-control validate-input" <?php if(isset($carrier)): ?> value="<?php echo $carrier; ?>" <?php endif; ?> placeholder="Carrier">
+</div>
+<div class="input-field col-xs-12">
+	<label>Modo de envio (*)</label>
+	<select class="form-control validate-input" name="ship_mode">
+		<option value="air" <?php if(isset($ship_mode) && $ship_mode == "air"): ?> selected <?php endif; ?>>Air</option> 
+		<option value="air-P2P" <?php if(isset($ship_mode) && $ship_mode == "air-P2P"): ?> selected <?php endif; ?>>Air-P2P</option> 
+		<option value="in/out" <?php if(isset($ship_mode) && $ship_mode == "in/out"): ?> selected <?php endif; ?>>In/Out</option> 
+		<option value="inland" <?php if(isset($ship_mode) && $ship_mode == "inland"): ?> selected <?php endif; ?>>Inland</option> 
+		<option value="ocean-1" <?php if(isset($ship_mode) && $ship_mode == "ocean-1"): ?> selected <?php endif; ?>>Ocean-1</option> 
+		<option value="ocean-P2P" <?php if(isset($ship_mode) && $ship_mode == "ocean-P2P"): ?> selected <?php endif; ?>>Ocean-P2P</option> 
+	</select>
+</div>

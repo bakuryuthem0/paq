@@ -1,0 +1,130 @@
+<?php $__env->startSection('content'); ?>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-11 center-block">
+		<div class="panel panel-default login-panel">
+			<div class="panel-heading">
+				<h3 class="text-center">Ver paquetes</h3>
+			</div>
+			<div class="panel-body">
+				<?php if(Session::has('success')): ?>
+				<div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<?php echo Session::get('success'); ?>
+
+				</div>
+				<?php endif; ?>
+				<?php if(Session::has('danger')): ?>
+				<div class="alert alert-danger">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<?php echo Session::get('danger'); ?>
+
+				</div>
+				<?php endif; ?>
+				<?php if($busq != ""): ?>
+				<div class="col-xs-4 col-md-8 pull-left">
+					<a href="<?php echo Request::url(); ?>" class="btn btn-warning">Restaurar</a>
+				</div>
+				<?php endif; ?>
+				<div class="col-xs-8 col-md-4 pull-right">
+					<form method="GET" action="<?php echo Request::url(); ?>">
+					<div class="input-group">
+						<input type="text" class="form-control" name="busq" placeholder="Busqueda: Id o username" value="<?php echo $busq; ?>">
+					    <span class="input-group-btn">
+					        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+					    </span>
+					</div><!-- /input-group -->
+					</form>
+				</div>
+				<div class="clearfix"></div>
+				<div class="table-responsive">
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Nombre</th>
+								<th>Dirección</th>
+								<th>Ciudad</th>
+								<th>Estado</th>
+								<th>Codigo Zip</th>
+								<th>Telefono</th>
+								<th>Editar</th>
+								<th>Eliminar</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($shippers as $s): ?>
+							<tr>
+								<td><?php echo $s->id; ?></td>
+								<td>
+									<?php if(empty($s->name)): ?>
+										Sin especificar
+									<?php else: ?>
+										<?php echo $s->name; ?>
+
+									<?php endif; ?>
+								</td>
+								<td>
+									<?php if(empty($s->address)): ?>
+										Sin especificar
+									<?php else: ?>
+										<?php echo $s->address; ?>
+
+									<?php endif; ?>	
+								</td>
+								<td>
+									<?php if(empty($s->city)): ?>
+										Sin especificar
+									<?php else: ?>
+										<?php echo $s->city; ?>
+
+									<?php endif; ?>
+								</td>
+								<td>
+									<?php if(empty($s->state)): ?>
+										Sin especificar
+									<?php else: ?>
+										<?php echo $s->state; ?>
+
+									<?php endif; ?>
+								</td>
+								<td>
+									<?php if(empty($s->zip)): ?>
+										Sin especificar
+									<?php else: ?>
+										<?php echo $s->zip; ?>
+
+									<?php endif; ?>
+								</td>
+								<td>
+									<?php if(empty($s->phone)): ?>
+										Sin especificar
+									<?php else: ?>
+										<?php echo $s->phone; ?>
+
+									<?php endif; ?>
+								</td>
+								<td>
+									<a href="<?php echo URL::to('administrador/ver-remitentes/'.$s->id); ?>" class="btn btn-warning btn-xs">
+										Editar
+									</a>
+								</td>
+								<td>
+									<button class="btn btn-xs btn-danger btn-elim-shipper" data-toggle="modal" data-target="#modalElim" data-url="<?php echo URL::to('administrador/ver-remitentes/eliminar'); ?>" value="<?php echo $s->id; ?>" data-tosend="id">Eliminar</button>
+								</td>
+							</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+				<?php echo View::make('partials.pagination')->with('collection',$shippers)->with('busq',$busq); ?>
+
+			</div>
+		</div>
+	</div>
+</div>
+<?php echo View::make('partials.modalElim'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

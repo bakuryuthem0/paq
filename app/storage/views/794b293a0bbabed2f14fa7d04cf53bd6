@@ -1,0 +1,44 @@
+<li>
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Paquetes <b class="caret"></b></a>
+	<ul class="dropdown-menu">
+		<li>
+			<a href="<?php echo URL::to('administrador/nuevo-paquete'); ?>">
+				<i class="fa fa-plus"></i> Nuevo Paquete
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo URL::to('administrador/ver-paquetes'); ?>">
+				<i class="fa fa-list"></i> Ver Paquetes
+			</a>
+		</li>
+	</ul>
+</li>
+<li>
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Remitente <b class="caret"></b></a>
+	<ul class="dropdown-menu">
+		<li>
+			<a href="<?php echo URL::to('administrador/nuevo-remitente'); ?>">
+				<i class="fa fa-plus"></i> Nuevo remitente
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo URL::to('administrador/ver-remitentes'); ?>">
+				<i class="fa fa-list"></i> Ver remitentes
+			</a>
+		</li>
+	</ul>
+</li><li>
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <b class="caret"></b></a>
+	<ul class="dropdown-menu">
+		<li>
+			<a href="<?php echo URL::to('administrador/nuevo-usuario'); ?>">
+				<i class="fa fa-plus"></i> Nuevo Usuario
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo URL::to('administrador/ver-usuarios'); ?>">
+				<i class="fa fa-list"></i> Ver Usuarios
+			</a>
+		</li>
+	</ul>
+</li>
