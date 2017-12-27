@@ -8,10 +8,10 @@
 	</select>
 </div>
 <div class="input-field col-xs-12 col-md-6">
-	<label>Aeropuerto de salida</label>
+	<label>Aeropuerto de salida (*)</label>
 	<input type="text" name="airport_depart" class="form-control validate-input" @if(isset($airport_depart)) value="{{ $airport_depart }}" @endif placeholder="Aeropuerto de salida">
 </div>
 <div class="input-field col-xs-12 col-md-6">
-	<label>Aeropuerto destino</label>
+	<label>Aeropuerto destino (*)</label>
 	<input type="text" name="airport_dest" class="form-control validate-input" @if(isset($airport_dest)) value="{{ $airport_dest }}" @endif placeholder="Aeropuerto destino">
 </div>

@@ -42,7 +42,6 @@
 						<thead>
 							<tr>
 								<th>Id</th>
-								<th>Usuario</th>
 								<th>Emisor</th>
 								<th>Peso (Kg)</th>
 								<th>Peso (Lbs)</th>
@@ -57,8 +56,7 @@
 							@foreach($packages as $p)
 							<tr>
 								<td>{{ $p->id }}</td>
-								<td>{{ $p->user->username }}</td>
-								<td>{{ $p->shipper }}</td>
+								<td>{{ $p->shipper->username }}</td>
 								<td>{{ number_format($p->weight,2,',','.') }}Kg</td>
 								<td>
 									{{ number_format($p->weight*2.20, 2, ',', '.') }}Lbs</td>

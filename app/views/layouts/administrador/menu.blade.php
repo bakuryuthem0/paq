@@ -14,21 +14,6 @@
 	</ul>
 </li>
 <li>
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Remitente <b class="caret"></b></a>
-	<ul class="dropdown-menu">
-		<li>
-			<a href="{{ URL::to('administrador/nuevo-remitente') }}">
-				<i class="fa fa-plus"></i> Nuevo remitente
-			</a>
-		</li>
-		<li>
-			<a href="{{ URL::to('administrador/ver-remitentes') }}">
-				<i class="fa fa-list"></i> Ver remitentes
-			</a>
-		</li>
-	</ul>
-</li>
-<li>
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <b class="caret"></b></a>
 	<ul class="dropdown-menu">
 		<li>

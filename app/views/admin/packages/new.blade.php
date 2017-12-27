@@ -30,7 +30,7 @@
 					<form method="POST" action="{{ URL::to('administrador/nuevo-paquete/enviar') }}">
 						<div class="col-xs-12 col-md-6 input-field">
 							<label>Tipo de envio (*)</label>
-						  	<select class="form-control validate-input type" name="type" data-name="tipo de envio" data-target=".partial-container" data-url="{{ URL::to('administrador/cargar-campos') }}">
+						  	<select class="form-control validate-input envio-type type" name="type" data-name="tipo de envio" data-target=".partial-container" data-url="{{ URL::to('administrador/cargar-campos') }}">
 								<option value="">Seleccione una opción</option>
 								@foreach($types as $t)
 								<option value="{{ $t->id }}" @if(Input::old('type') && Input::old('type') == $t->id) selected @endif>{{ $t->name }}</option>
@@ -41,47 +41,60 @@
 							<label>Remitente (*)</label>
 						  	<select class="form-control validate-input selectpicker" name="shipper" data-name="remitente" data-show-subtext="true" data-live-search="true">
 								<option value="">Seleccione una opción</option>
-								@foreach($shippers as $s)
-								<option value="{{ $s->id }}" @if(Input::old('shipper') && Input::old('shipper') == $s->id) selected @endif data-subtext="{{ $s->phone }}">{{ $s->name }}</option>
+								@foreach($users as $u)
+									<option value="{{ $u->id }}" @if(Input::old('user') && Input::old('user') == $u->id) selected @endif data-subtext="{{ $u->email }}">{{ ucfirst($u->username) }}</option>
 								@endforeach
 							</select>
 						</div>
+						<div class="col-xs-12 col-md-6 input-field">
+							<label>Origen de la carga (*)</label>
+							<input type="text" name="origin" class="form-control validate-input" placeholder="Origen de la carga (*)" data-name="Origen de la carga" value="{{ Input::old('origin') }}">
+						</div>
+						<div class="col-xs-12 col-md-6 input-field">
+							<label>Destino de la carga (*)</label>
+							<input type="text" name="destination" class="form-control validate-input" placeholder="Destino de la carga (*)" data-name="Destino de la carga" value="{{ Input::old('destination') }}">
+						</div>
 						<div class="col-xs-12 col-md-4 input-field">
 							<label>Alto <small>pulg</small>(*)</label>
-						  	<input type="number" name="height" class="form-control validate-input" placeholder="Alto" value="{{ Input::old('height') }}" data-name="peso">
+						  	<input type="number" name="height" class="form-control validate-input alto" placeholder="Alto" value="{{ Input::old('height') }}" data-name="alto">
 						</div>
 						<div class="col-xs-12 col-md-4 input-field">
 							<label>Ancho <small>pulg</small>(*)</label>
-						  	<input type="number" name="width" class="form-control validate-input" placeholder="Ancho" value="{{ Input::old('width') }}" data-name="peso">
+						  	<input type="number" name="width" class="form-control validate-input ancho" placeholder="Ancho" value="{{ Input::old('width') }}" data-name="ancho">
 						</div>
 						<div class="col-xs-12 col-md-4 input-field">
 							<label>Largo <small>pulg</small>(*)</label>
-						  	<input type="number" name="length" class="form-control validate-input" placeholder="Largo" value="{{ Input::old('length') }}" data-name="peso">
+						  	<input type="number" name="length" class="form-control validate-input largo" placeholder="Largo" value="{{ Input::old('length') }}" data-name="largo">
 						</div>
 						<div class="col-xs-12 input-field">
 							<label>Peso <small>Lb</small>(*)</label>
-						  	<input type="number" name="weight" class="form-control validate-input" placeholder="Peso" value="{{ Input::old('weight') }}" data-name="peso">
+						  	<input type="number" name="weight" class="form-control validate-input peso" placeholder="Peso" value="{{ Input::old('weight') }}" data-name="peso">
+						</div>
+						<div class="col-xs-12 input-field">
+							<label data-toggle="tooltip" data-placement="top" data-title="Debe llenar los campos, tipo de envio, alto, ancho y largo">Volumen <small>pulg<sup>3</sup></small>(*)</label>
+							<input type="text" class="form-control disabled volume" disabled placeholder="Volumen" data-toggle="tooltip" data-placement="top" data-title="Debe llenar los campos, tipo de envio, alto, ancho y largo" value="{{ Input::old('volume') }}">
+						</div>
+						<input type="hidden" name="volume" class="volume" value="{{ Input::old('volume') }}">
+						<div class="col-xs-12 input-field">
+							<label data-toggle="tooltip" data-placement="top" data-title="Debe llenar los campos, tipo de envio, alto, ancho y largo">Flete <span class="flete-tipo"></span>(*)</label>
+							<input type="text" class="form-control disabled flete" disabled placeholder="Volumen" data-toggle="tooltip" data-placement="top" data-title="Debe llenar los campos, tipo de envio, alto, ancho y largo" {{ Input::old('flete') }}>
+						</div>
+						<input type="hidden" name="flete" class="flete" value="{{ Input::old('flete') }}">
+						<div class="col-xs-12 col-md-6 input-field">
+							<label>Tipo de mercancia (*)</label>
+							<input type="text" name="merc_type" class="form-control validate-input" placeholder="Destino de la carga (*)" data-name="Destino de la carga" value="{{ Input::old('merc_type') }}">
+						</div>
+						<div class="col-xs-12 col-md-6 input-field">
+							<label>Costo de la mercancia <small>USD</small>(*)</label>
+							<input type="text" name="merc_value" class="form-control validate-input" placeholder="Destino de la carga (*)" data-name="Destino de la carga" value="{{ Input::old('merc_value') }}">
 						</div>
 						<div class="col-xs-12 input-field">
 							<label>Ubicación (*)</label>
 						  	<input type="text" name="location" class="form-control validate-input" placeholder="Ubicación" value="{{ Input::old('location') }}" data-name="ubicación">
 						</div>
 						<div class="col-xs-12 input-field">
-							<label>Observación</label>
-						  	<input type="text" name="observation" class="form-control" placeholder="Observación" value="{{ Input::old('observation') }}" data-name="observación">
-						</div>
-						<div class="col-xs-12 input-field">
 							<label>Cantidad de cajas (*)</label>
 						  	<input type="number" name="box_qty" class="form-control validate-input" placeholder="Cantidad de cajas" value="{{ Input::old('box_qty') }}" data-name="cantidad de cajas">
-						</div>
-						<div class="col-xs-12 input-field">
-							<label>Usuario (*)</label>
-							<select class="form-control validate-input selectpicker" name="user" data-name="usuario" data-show-subtext="true" data-live-search="true">
-								<option value="">Seleccione una opción</option>
-								@foreach($users as $u)
-									<option value="{{ $u->id }}" @if(Input::old('user') && Input::old('user') == $u->id) selected @endif data-subtext="{{ $u->email }}">{{ ucfirst($u->username) }}</option>
-								@endforeach
-							</select>
 						</div>
 						<div class="col-xs-12">
 							<label>Consigna (*)</label>
@@ -130,6 +143,10 @@
 								@endif
 							@endif
 						</div>
+						<div class="col-xs-12 input-field">
+							<label>Observación</label>
+						  	<textarea name="observation" class="form-control" placeholder="Observación" data-name="observación">{{ Input::old('observation') }}</textarea>
+						</div>
 						{{ Form::token() }}
 					</form>
 					<div class="col-xs-12 input-field">
@@ -150,6 +167,7 @@
 @if(Input::old('type'))
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
+		$('[data-toggle = tooltip]').tooltip();
 		var btn = $('.type');
 	    var dataPost = {
 	      id : btn.val()

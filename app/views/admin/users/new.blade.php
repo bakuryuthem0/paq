@@ -47,6 +47,15 @@
 						<div class="input-field">
 							<label>Nombre completo (*)</label>
 						  	<input type="text" name="name" class="form-control validate-input" placeholder="Nombre completo" value="{{ Input::old('name') }}">
+						</div>			
+						<div class="input-field">
+							<label>País (*)</label>
+						  	<select class="form-control validate-input selectpicker" name="country" data-name="País" data-show-subtext="true" data-live-search="true">
+								<option value="">Seleccione una opción</option>
+								@foreach($country as $c)
+									<option value="{{ $c->id }}" @if(Input::old('country') && Input::old('country') == $c->id) selected @endif data-subtext="{{ $c->name }}">{{ ucfirst($c->code) }}</option>
+								@endforeach
+							</select>
 						</div>						
 						<div class="input-field">
 							<label>Rol / Permisos (*)</label>
@@ -66,5 +75,12 @@
 			</div>
 		</div>
 	</div>
+
+@stop
+
+@section('postscript')
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 @stop

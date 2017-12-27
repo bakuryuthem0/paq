@@ -1,9 +1,9 @@
 <?php
 
 class Package extends Eloquent{
-	public function user()
+	public function shipper()
 	{
-		return $this->belongsTo('User','user_id');
+		return $this->belongsTo('User','shipper_id');
 	}
 	public function status()
 	{
@@ -36,9 +36,14 @@ class Package extends Eloquent{
 		$this->length 		= $data['length'];
 		$this->consignee 	= $data['consig'];
 		$this->location 	= $data['location'];
+		$this->origin				= $data['origin'];
+		$this->destination			= $data['destination'];
+		$this->volumen				= $data['volume'];
+		$this->flete				= $data['flete'];
+		$this->merc_type			= $data['merc_type'];
+		$this->merc_value			= $data['merc_value'];
 		if (isset($dat['observation'])) {
 			$this->observation 	= $data['observation'];
 		}
-		$this->user_id 		= $data['user'];
 	}
 }

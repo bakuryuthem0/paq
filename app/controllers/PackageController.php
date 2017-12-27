@@ -6,7 +6,8 @@ class PackageController extends BaseController {
 	{
 		$title = "Nuevo Paquete | nombredelapagina";
 		$types = Type::get();
-		$users = User::whereHas('roles',function($roles){
+		$users = User::with('country')
+		->whereHas('roles',function($roles){
 			$roles->where('slug','=','cliente');
 		})
 		->get();
@@ -22,7 +23,7 @@ class PackageController extends BaseController {
 		$data = Input::all();
 		$rules = array(
 			'type'					=> 'required|exists:types,id',
-			'shipper'				=> 'required|exists:shippers,id',
+			'shipper'				=> 'required|exists:users,id',
 			'height'				=> 'required|numeric|min:1',
 			'width'					=> 'required|numeric|min:1',
 			'length'				=> 'required|numeric|min:1',
@@ -30,8 +31,13 @@ class PackageController extends BaseController {
 			'location'				=> 'required|min:4|max:50',
 			'observation'			=> 'sometimes|min:4|max:200',
 			'box_qty'				=> 'required|min:1',
-			'user'					=> 'required|exists:users,id',
 			'consig'				=> 'required|min:1|max:50',
+			'origin'				=> 'required|max:500',
+			'destination'			=> 'required|max:500',
+			'volume'				=> 'sometimes|numeric',
+			'flete'					=> 'sometimes|numeric',
+			'merc_type'				=> 'required|max:500',
+			'merc_value'			=> 'required',
 		);
 		if (Input::has('type')) {
 			if ($data['type'] == 'puerta-a-puerta') {
@@ -70,6 +76,12 @@ class PackageController extends BaseController {
 			'box_qty'				=> 'cantidad de cajas',
 			'user'					=> 'usuario a asignar',
 			'consig'				=> 'consigna',
+			'origin'				=> 'origen',
+			'destination'			=> 'destino',
+			'volume'				=> 'volumen',
+			'flete'					=> 'flete',
+			'merc_type'				=> 'tipo de mercancia',
+			'merc_value'			=> 'valor de la mercancia',
 		);
 		if (Input::has('type')) {
 			if ($data['type'] == 'puerta-a-puerta') {
@@ -116,7 +128,7 @@ class PackageController extends BaseController {
 	{
 		$title = "Ver paquetes | nombredelapagina";
 		$busq = "";
-		$packages = Package::with('user')
+		$packages = Package::with('shipper')
 		->with('status')
 		->with('createdBy')
 		->with('updatedBy')
@@ -126,8 +138,8 @@ class PackageController extends BaseController {
 			$packages = $packages->where(function($query) use ($busq){
 				$query->where('id','=',$busq);
 			})
-			->orWhereHas('user',function($user) use ($busq){
-				$user->where('username','=',$busq);
+			->orWhereHas('shipper',function($shipper) use ($busq){
+				$shipper->where('username','=',$busq);
 			});
 		}
 
@@ -144,7 +156,6 @@ class PackageController extends BaseController {
 		$id = Input::get('id');
 		$locations = PackageLocation::where('package_id','=',$id)->orderBy('id','DESC')->get();
 		$package  = Package::find($id);
-
 		return View::make('partials.locations')
 		->with('locations',$locations)
 		->with('package',$package);
@@ -152,9 +163,8 @@ class PackageController extends BaseController {
 	public function getMdfPackage($id)
 	{
 		$title = "Modificar paquete | nombredelapagina";
-		$package = Package::find($id);
+		$package = Package::with('types')->find($id);
 		$types   = Type::get();
-		$shippers = Shipper::get();
 
 		$users = User::whereHas('roles',function($roles){
 			$roles->where('slug','=','cliente');
@@ -163,7 +173,6 @@ class PackageController extends BaseController {
 		return View::make('admin.packages.mdf')
 		->with('title',$title)
 		->with('types',$types)
-		->with('shippers',$shippers)
 		->with('package',$package)
 		->with('users',$users);
 	}
@@ -172,7 +181,7 @@ class PackageController extends BaseController {
 		$data = Input::all();
 		$rules = array(
 			'type'					=> 'required|exists:types,id',
-			'shipper'				=> 'required|exists:shippers,id',
+			'shipper'				=> 'required|exists:users,id',
 			'height'				=> 'required|numeric|min:1',
 			'width'					=> 'required|numeric|min:1',
 			'length'				=> 'required|numeric|min:1',
@@ -180,8 +189,13 @@ class PackageController extends BaseController {
 			'location'				=> 'required|min:4|max:50',
 			'observation'			=> 'sometimes|min:4|max:200',
 			'box_qty'				=> 'required|min:1',
-			'user'					=> 'required|exists:users,id',
 			'consig'				=> 'required|min:1|max:50',
+			'origin'				=> 'required|max:500',
+			'destination'			=> 'required|max:500',
+			'volume'				=> 'sometimes|numeric',
+			'flete'					=> 'sometimes|numeric',
+			'merc_type'				=> 'required|max:500',
+			'merc_value'			=> 'required',
 		);
 		if (Input::has('type')) {
 			if ($data['type'] == 'puerta-a-puerta') {
@@ -220,6 +234,12 @@ class PackageController extends BaseController {
 			'box_qty'				=> 'cantidad de cajas',
 			'user'					=> 'usuario a asignar',
 			'consig'				=> 'consigna',
+			'origin'				=> 'origen',
+			'destination'			=> 'destino',
+			'volume'				=> 'volumen',
+			'flete'					=> 'flete',
+			'merc_type'				=> 'tipo de mercancia',
+			'merc_value'			=> 'valor de la mercancia',
 		);
 		if (Input::has('type')) {
 			if ($data['type'] == 'puerta-a-puerta') {
@@ -271,7 +291,7 @@ class PackageController extends BaseController {
 		$data['package']     = $id;
 		$data['description'] = Status::find($package->status_id)->description;
 		
-		$to_email = User::find($package->user_id)->email;
+		$to_email = User::find($package->shipper_id)->email;
 		Mail::queue('emails.status-changed', $data, function($message) use ($to_email, $data)
 		{
 			$message->to($to_email)
@@ -301,7 +321,7 @@ class PackageController extends BaseController {
 		$data['package']     = $id;
 		$data['description'] = Status::find($package->status_id)->description;
 		
-		$to_email = User::find($package->user_id)->email;
+		$to_email = User::find($package->shipper_id)->email;
 		Mail::queue('emails.location-changed', $data, function($message) use ($to_email, $data)
 		{
 			$message->to($to_email)
@@ -327,7 +347,7 @@ class PackageController extends BaseController {
 	{
 		$title = "Ver mis paquetes | nombredelapagina";
 		$busq = "";
-		$packages = Package::where('user_id','=',Auth::id())->orderBy('id','DESC');
+		$packages = Package::where('shipper_id','=',Auth::id())->orderBy('id','DESC');
 
 		if ($type == "no-entregados") {
 			$packages = $packages->whereHas('status',function($status){

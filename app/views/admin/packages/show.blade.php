@@ -42,10 +42,10 @@
 						<thead>
 							<tr>
 								<th>Id</th>
-								<th>Usuario</th>
-								<th>Emisor</th>
-								<th>Peso (Kg)</th>
-								<th>Peso (Lbs)</th>
+								<th>Remitente</th>
+								<th>Dimensiones</th>
+								<th>Origen</th>
+								<th>Destino</th>
 								<th>Ubicación</th>
 								<th>Observación</th>
 								<th>Cantidad de cajas</th>
@@ -61,12 +61,26 @@
 							@foreach($packages as $p)
 							<tr>
 								<td>{{ $p->id }}</td>
-								<td>{{ $p->user->username }}</td>
-								<td>{{ $p->shipper }}</td>
-								<td>{{ number_format($p->weight,2,',','.') }}Kg</td>
+								<td>{{ $p->shipper->username }}</td>
 								<td>
-									{{ number_format($p->weight*2.20, 2, ',', '.') }}Lbs</td>
-								<td>{{ $p->location }}</td>
+									<ul class="text-left">
+										<li><strong>Peso:</strong> {{ number_format($p->weight, 2, ',', '.') }}Lbs</li>
+										<li><strong>Ancho:</strong> {{ $p->width }}</li>
+										<li><strong>Alto:</strong> {{ $p->height }}</li>
+										<li><strong>Largo:</strong> {{ $p->length }}</li>
+										<li><strong>Volumen: </strong> {{ $p->volumen }}</li>
+										<li><strong>Flete: </strong> {{ number_format($p->flete, 4) }}</li>
+
+									</ul>
+								</td>
+								<td>
+									{{ $p->origin }}
+								</td>
+								<td>
+									{{ $p->destination }}
+								</td>
+								<td>
+									{{ $p->location }}</td>
 								<td>
 									@if(!empty($p->observation))
 										{{ $p->observation }}
@@ -119,6 +133,7 @@
 				<div class="text-center center-block">
 					<img src="{{ asset('images/loader.gif') }}" class="miniLoader active">
 				</div>
+			</div>
 			<div class="modal-footer">
 				<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
 			</div>

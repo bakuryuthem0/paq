@@ -21,6 +21,21 @@ function searchDhl () {
 	url += "&brand=DHL";
 	return url;
 }
+function calcVolume () {
+	var vol = parseInt($('.ancho').val())*parseInt($('.alto').val())*parseInt($('.largo').val());
+	$('.volume').val(vol);
+	if($('.envio-type').val() == 2)
+	{
+		var flete = vol/1728;
+		$('.flete-tipo').html('marítimos');
+		$('.flete').val(flete);
+	}else if($('.envio-type').val() == 3)
+	{
+		var flete = vol/166;
+		$('.flete-tipo').html('aéreo');
+		$('.flete').val(flete);
+	}
+}
 function startLoadTable (btn) {
 	$(btn.data('target')).find('.respone-desc').html('');
 	$(btn.data('target')).find('.miniLoader').addClass('active');
@@ -115,5 +130,15 @@ jQuery(document).ready(function($) {
 			event.preventDefault();
 		}
 		$('.dhl').val('');
+	});
+	$('.alto, .ancho, .largo').on('keyup', function(event) {
+		if ($('.alto').val() != "" && $('.ancho').val() != "" && $('.largo').val() != "") {
+			calcVolume();
+		};
+	});
+	$('.envio-type').on('change', function(event) {
+		if ($('.alto').val() != "" && $('.ancho').val() != "" && $('.largo').val() != "") {
+			calcVolume();
+		};
 	});
 });

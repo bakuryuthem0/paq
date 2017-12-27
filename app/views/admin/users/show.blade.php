@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-	<div class="col-xs-12 col-sm-11 center-block">
+	<div class="col-xs-12 center-block">
 		<div class="panel panel-default login-panel">
 			<div class="panel-heading">
 				<h3 class="text-center">Ver Usuarios</h3>
@@ -44,6 +44,7 @@
 								<th>Id</th>
 								<th>Nombre</th>
 								<th>Usuario</th>
+								<th>País</th>
 								<th>Rol / Permisos</th>
 								<th>Cambiar Rol / Permisos</th>
 								<th>Modificar</th>
@@ -55,8 +56,21 @@
 							@foreach($users as $u)
 							<tr>
 								<td>{{ $u->id }}</td>
-								<td>{{ $u->full_name }}</td>
+								<td>
+									@if($u->full_name)
+										{{ $u->full_name }}
+									@else
+										Sin especificar
+									@endif
+								</td>
 								<td>{{ $u->username }}</td>
+								<td>
+									@if($u->country)
+										{{ $u->country->code.' - '.$u->country->name }}
+									@else
+										Sin especificar
+									@endif
+								</td>
 								<td>{{ $u->roles->description }}</td>
 								<td>
 									<button class="btn btn-primary btn-xs change-role" data-toggle="modal" data-target="#changeRole" value="{{ $u->id }}">Cambiar</button>

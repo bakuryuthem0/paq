@@ -8,9 +8,11 @@ class UserController extends BaseController {
 
 		$roles = Role::where('id', '>',Auth::user()->role_id)
 		->get();
+		$country  = Country::get();
 
 		return View::make('admin.users.new')
 		->with('title',$title)
+		->with('country',$country)
 		->with('roles',$roles);
 	}
 	public function postNewUser()
@@ -21,13 +23,15 @@ class UserController extends BaseController {
 			'password' => 'required|min:6|max:16|confirmed',
 			'email'	   => 'required|email|unique:users,email',
 			'name'	   => 'required|min:3|max:50',
-			'role'	   => 'required|exists:roles,id'
+			'role'	   => 'required|exists:roles,id',
+			'country'  => 'required|exists:countries,id'
 		);
 		$msg  = array();
 		$attr = array(
 			'password'=> 'Contraseña',
 			'role'	  => 'rol',
-			'name'	  => 'nombre completo'
+			'name'	  => 'nombre completo',
+			'country' => 'País'
 		);
 		$validator = Validator::make($data, $rules, $msg, $attr);
 		if ($validator->fails()) {
@@ -36,11 +40,12 @@ class UserController extends BaseController {
 		}
 
 		$user = new User;
-		$user->username = $data['username'];
-		$user->password = Hash::make($data['password']);
-		$user->email    = $data['email'];
-		$user->role_id  = $data['role'];
-		$user->full_name= $data['name'];
+		$user->username 	= $data['username'];
+		$user->password 	= Hash::make($data['password']);
+		$user->email    	= $data['email'];
+		$user->role_id  	= $data['role'];
+		$user->full_name	= $data['name'];
+		$user->country_id   = $data['country'];
 		$user->save();
 
 		Session::flash('success', 'Se ha creado al usuario satisfactoriamente.');
@@ -52,6 +57,7 @@ class UserController extends BaseController {
 		$title = "Ver Usuarios";
 		$busq = "";
 		$users = User::with('roles')
+		->with('country')
 		->where('id','!=',Auth::id())
 		->where('role_id','>',Auth::user()->role_id)
 		->orderBy('id','DESC');
