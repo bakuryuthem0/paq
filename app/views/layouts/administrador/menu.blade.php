@@ -1,4 +1,10 @@
 <li>
+	<a href="{{ URL::to('administrador/ver-aerolineas') }}">Gestionar Aerolineas</a>
+</li>
+<li>
+	<a href="{{ URL::to('administrador/ver-proveedores') }}">Gestionar Proveedores</a>
+</li>
+<li>
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Paquetes <b class="caret"></b></a>
 	<ul class="dropdown-menu">
 		<li>

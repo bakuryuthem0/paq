@@ -30,7 +30,8 @@ body,html
 {
 	position: absolute;
 	top: 40%;
-	@include transform(translateY(-40%));
+	left: 50%;
+	@include transform(translate(-40%,-50%));
 }
 .margin-1
 {

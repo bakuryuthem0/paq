@@ -12,10 +12,12 @@ class PackageController extends BaseController {
 		})
 		->get();
 		$shippers = Shipper::get();
+		$providers = Provider::get();
 		return View::make('admin.packages.new')
 		->with('title',$title)
 		->with('types',$types)
 		->with('users',$users)
+		->with('providers',$providers)
 		->with('shippers',$shippers);
 	}
 	public function postNewPackage()
@@ -38,6 +40,8 @@ class PackageController extends BaseController {
 			'flete'					=> 'sometimes|numeric',
 			'merc_type'				=> 'required|max:500',
 			'merc_value'			=> 'required',
+			'guide_number'			=> 'required',
+			'provider'				=> 'required|exists:providers,id',
 		);
 		if (Input::has('type')) {
 			if ($data['type'] == 'puerta-a-puerta') {
@@ -82,6 +86,7 @@ class PackageController extends BaseController {
 			'flete'					=> 'flete',
 			'merc_type'				=> 'tipo de mercancia',
 			'merc_value'			=> 'valor de la mercancia',
+			'guide_number'			=> 'Numero de guia'
 		);
 		if (Input::has('type')) {
 			if ($data['type'] == 'puerta-a-puerta') {
@@ -170,9 +175,12 @@ class PackageController extends BaseController {
 			$roles->where('slug','=','cliente');
 		})
 		->get();
+		$providers = Provider::get();
+
 		return View::make('admin.packages.mdf')
 		->with('title',$title)
 		->with('types',$types)
+		->with('providers',$providers)
 		->with('package',$package)
 		->with('users',$users);
 	}
@@ -196,6 +204,8 @@ class PackageController extends BaseController {
 			'flete'					=> 'sometimes|numeric',
 			'merc_type'				=> 'required|max:500',
 			'merc_value'			=> 'required',
+			'guide_number'			=> 'required'
+			
 		);
 		if (Input::has('type')) {
 			if ($data['type'] == 'puerta-a-puerta') {
@@ -240,6 +250,7 @@ class PackageController extends BaseController {
 			'flete'					=> 'flete',
 			'merc_type'				=> 'tipo de mercancia',
 			'merc_value'			=> 'valor de la mercancia',
+			'guide_number'			=> 'Numero de guia'
 		);
 		if (Input::has('type')) {
 			if ($data['type'] == 'puerta-a-puerta') {
@@ -288,10 +299,21 @@ class PackageController extends BaseController {
 		$package = Package::find($id);
 		$package->status_id = $status;
 		$package->save();
+		$data  = [];
 		$data['package']     = $id;
 		$data['description'] = Status::find($package->status_id)->description;
 		
 		$to_email = User::find($package->shipper_id)->email;
+		$rules = [];
+		$data['email']  = $to_email;
+		$rules['email'] = "required|email";
+		$validator = Validator::make($data, $rules);
+		if ($validator->fails()) {
+			return Response::json(array(
+				'type' => 'success',
+				'msg'  => 'se ha cambiado el status satisfactoriamente, pero debido que no se suministro email para este usuario no se le ha notifiacdo.'
+			));
+		}
 		Mail::queue('emails.status-changed', $data, function($message) use ($to_email, $data)
 		{
 			$message->to($to_email)
@@ -428,7 +450,9 @@ class PackageController extends BaseController {
 	public function getCaracteristics()
 	{
 		$id = Input::get('id');
-		$package = Package::with('types')->with('descs')->find($id);
+		$package = Package::with('types')
+		->with('providers')
+		->with('descs')->find($id);
 
 		return View::make('partials.packageDesc')
 		->with('package',$package);

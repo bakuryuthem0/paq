@@ -100,6 +100,27 @@
 							<label>Consigna (*)</label>
 							<input type="text" name="consig" class="form-control validate-input" placeholder="Consigna" value="{{ $package->consignee }}">
 						</div>
+						<div class="col-xs-12 col-md-6">
+							<label>Numero de guia (*)</label>
+							<input type="text" name="guide_number" class="form-control validate-input" placeholder="Numero de guia" value="{{ $package->guide_number }}">
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<label>Proveedor (*)</label>
+							<select class="form-control validate-input selectpicker provider-input" name="provider" data-name="proveedor" data-show-subtext="true" data-live-search="true">
+								<option value="">Seleccione una opción</option>
+								@foreach($providers as $p)
+									<option value="{{ $p->id }}" data-phone="{{ $p->phone }}" @if($package->provider_id == $p->id) selected @endif>{{ ucfirst($p->name) }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<label>Telefono cliente</label>
+							<input type="text" name="client_phone" class="form-control" placeholder="Numero de guia" value="{{ $package->client_phone }}">
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<label>Telefono proveedor</label>
+							<input type="text" name="provider_phone" class="form-control provider_phone" placeholder="Numero de guia" value="{{ $package->provider_phone }}">
+						</div>
 						<div class="partial-container">
 							@if($package->types->slug == 'puerta-a-puerta')
 								<input type="hidden" class="input_old" name="dest" value="{{ $package->descs->dest }}"> 

@@ -31,9 +31,11 @@
 					<div class="collapse navbar-collapse navbar-ex1-collapse">
 						<ul class="nav navbar-nav navbar-right">
 							@if(Auth::check())
+							{{-- 
 							<li>
 								<a href="#dhlSearch" data-toggle="modal">Busqueda por DHL</a>
 							</li>
+							--}}
 							{{ View::make('layouts.'.UserLib::getUserRole()->slug.'.menu') }}
 							<li>
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->username }} <b class="caret"></b></a>

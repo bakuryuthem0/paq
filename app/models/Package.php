@@ -25,6 +25,10 @@ class Package extends Eloquent{
 	{
 		return $this->hasOne('PackageDesc','package_id');
 	}
+	public function providers()
+	{
+		return $this->belongsTo('Provider','provider_id');
+	}
 	public function fillData($data)
 	{
 		$this->shipper_id 	= $data['shipper'];
@@ -42,8 +46,16 @@ class Package extends Eloquent{
 		$this->flete				= $data['flete'];
 		$this->merc_type			= $data['merc_type'];
 		$this->merc_value			= $data['merc_value'];
-		if (isset($dat['observation'])) {
+		$this->guide_number			= $data['guide_number'];
+		$this->provider_id			= $data['provider'];
+		if (isset($data['observation'])) {
 			$this->observation 	= $data['observation'];
+		}
+		if (isset($data['client_phone'])) {
+			$this->client_phone 	= $data['client_phone'];
+		}
+		if (isset($data['provider_phone'])) {
+			$this->provider_phone 	= $data['provider_phone'];
 		}
 	}
 }

@@ -42,24 +42,43 @@
 						<thead>
 							<tr>
 								<th>Id</th>
-								<th>Emisor</th>
-								<th>Peso (Kg)</th>
-								<th>Peso (Lbs)</th>
+								<th>Guia</th>
+								<th>Dimensiones</th>
 								<th>Ubicación</th>
 								<th>Observación</th>
 								<th>Cantidad de cajas</th>
 								<th>Status</th>
 								<th>Ubicación</th>
+								<th>Características adicionales</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach($packages as $p)
+							<?php $aero = UserLib::checkAeroline(substr($p->guide_number,0,3));?>
 							<tr>
 								<td>{{ $p->id }}</td>
-								<td>{{ $p->shipper->username }}</td>
-								<td>{{ number_format($p->weight,2,',','.') }}Kg</td>
 								<td>
-									{{ number_format($p->weight*2.20, 2, ',', '.') }}Lbs</td>
+									@if($aero)
+									<a href="{{ $aero->url.'?'.$aero->variable_name.'='.$p->guide_number }}" title="{{ $aero->name }}" target="_blank">
+										{{ $p->guide_number }}
+										
+									</a>
+									@else
+									{{ $p->guide_number }}
+									@endif
+								</td>
+								<td>
+									<button class="btn btn-info btn-xs btn-flat" data-toggle="collapse" data-target="#collapse_{{ $p->id }}">Ver</button>
+									<ul class="text-left collapse" id="collapse_{{ $p->id }}">
+										<li><strong>Peso:</strong> {{ number_format($p->weight, 2, ',', '.') }}Lbs</li>
+										<li><strong>Ancho:</strong> {{ $p->width }}</li>
+										<li><strong>Alto:</strong> {{ $p->height }}</li>
+										<li><strong>Largo:</strong> {{ $p->length }}</li>
+										<li><strong>Volumen: </strong> {{ $p->volumen }}</li>
+										<li><strong>Flete: </strong> {{ number_format($p->flete, 4) }}</li>
+
+									</ul>
+								</td>
 								<td>{{ $p->location }}</td>
 								<td>
 									@if(!empty($p->observation))
@@ -84,6 +103,9 @@
 								<td>
 									<button class="btn btn-primary btn-xs show-location" data-toggle="modal" data-target="#locations" data-toload=".partial-container" data-url="{{ URL::to('administrador/ver-ubicacion') }}" value="{{ $p->id }}">Ver</button>
 								</td>
+								<td>
+									<button class="btn btn-default btn-xs see-extra-details" data-toggle="modal" data-target="#seeDetails" value="{{ $p->id }}" data-url="{{ URL::to('administrador/ver-caracteristicas') }}">Ver</button>
+								</td>
 							</tr>
 							@endforeach
 						</tbody>
@@ -106,6 +128,29 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="seeDetails">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Ver datos adicionales</h4>
+			</div>
+			<div class="modal-body">
+				<div class="table-responsive">
+					<table class="table table-hover respone-desc">
+						
+					</table>
+				</div>
+				<div class="text-center center-block">
+					<img src="{{ asset('images/loader.gif') }}" class="miniLoader active">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
 	</div>

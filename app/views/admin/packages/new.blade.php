@@ -98,7 +98,28 @@
 						</div>
 						<div class="col-xs-12">
 							<label>Consigna (*)</label>
-							<input type="text" name="consig" class="form-control validate-input" placeholder="Consigna">
+							<input type="text" name="consig" class="form-control validate-input" placeholder="Consigna" value="{{ Input::old('consig') }}">
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<label>Numero de guia (*)</label>
+							<input type="text" name="guide_number" class="form-control validate-input" placeholder="Numero de guia" value="{{ Input::old('guide_number') }}">
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<label>Proveedor (*)</label>
+							<select class="form-control validate-input selectpicker provider-input" name="provider" data-name="proveedor" data-show-subtext="true" data-live-search="true">
+								<option value="">Seleccione una opción</option>
+								@foreach($providers as $p)
+									<option value="{{ $p->id }}" data-phone="{{ $p->phone }}" @if(Input::old('provider') && Input::old('provider') == $p->id) selected @endif>{{ ucfirst($p->name) }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<label>Telefono cliente</label>
+							<input type="text" name="client_phone" class="form-control validate-input" placeholder="Numero de guia" value="{{ Input::old('client_phone') }}">
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<label>Telefono proveedor</label>
+							<input type="text" name="provider_phone" class="form-control validate-input provider_phone" placeholder="Numero de guia" value="{{ Input::old('provider_phone') }}">
 						</div>
 						<div class="partial-container">
 							@if(Input::old('type'))

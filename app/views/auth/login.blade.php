@@ -1,12 +1,12 @@
 @extends('layouts.default')
 
 @section('content')
-	<div class="valign-pane">
+	<div class="valign-pane col-sm-12 col-md-6">
 		<div class="col-xs-12">
 			<h2 class="text-center">Sistema de Administración</h2>
 		</div>
 		<div class="clearfix"></div>
-		<div class="col-xs-12 col-sm-8 col-md-6 center-block">
+		<div class="center-block">
 			<div class="panel panel-default login-panel">
 				<div class="panel-heading">
 					<h3 class="text-center">Inicio de sesión</h3>

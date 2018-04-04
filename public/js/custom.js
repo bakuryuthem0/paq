@@ -48,6 +48,14 @@ function endTable (btn) {
 	$(btn.data('target')).find('.miniLoader').removeClass('active');
 }
 jQuery(document).ready(function($) {
+	$('.btn-elim-provider').on('click', function(event) {
+		$('.elim-title').html('Eliminar proveedor');
+		addValToElim ($('.btn-elim'), $(this));
+	});
+	$('.btn-elim-this').on('click', function(event) {
+		$('.elim-title').html('Eliminar aerolinea');
+		addValToElim ($('.btn-elim'), $(this));
+	});
 	$('.btn-elim-shipper').on('click', function(event) {
 		$('.elim-title').html('Eliminar remitente');
 		addValToElim ($('.btn-elim'), $(this));
@@ -140,5 +148,9 @@ jQuery(document).ready(function($) {
 		if ($('.alto').val() != "" && $('.ancho').val() != "" && $('.largo').val() != "") {
 			calcVolume();
 		};
+	});
+	$(document).on('change', '.provider-input',function(event) {
+		console.log('change');
+		$('.provider_phone').val($(this).find('option:selected').data('phone'));
 	});
 });

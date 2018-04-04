@@ -42,6 +42,7 @@
 						<thead>
 							<tr>
 								<th>Id</th>
+								<th>Guia</th>
 								<th>Remitente</th>
 								<th>Dimensiones</th>
 								<th>Origen</th>
@@ -59,11 +60,23 @@
 						</thead>
 						<tbody>
 							@foreach($packages as $p)
+							<?php $aero = UserLib::checkAeroline(substr($p->guide_number,0,3));?>
 							<tr>
 								<td>{{ $p->id }}</td>
+								<td>
+									@if($aero)
+									<a href="{{ $aero->url.'?'.$aero->variable_name.'='.$p->guide_number }}" title="{{ $aero->name }}" target="_blank">
+										{{ $p->guide_number }}
+										
+									</a>
+									@else
+									{{ $p->guide_number }}
+									@endif
+								</td>
 								<td>{{ $p->shipper->username }}</td>
 								<td>
-									<ul class="text-left">
+									<button class="btn btn-info btn-xs btn-flat" data-toggle="collapse" data-target="#collapse_{{ $p->id }}">Ver</button>
+									<ul class="text-left collapse" id="collapse_{{ $p->id }}">
 										<li><strong>Peso:</strong> {{ number_format($p->weight, 2, ',', '.') }}Lbs</li>
 										<li><strong>Ancho:</strong> {{ $p->width }}</li>
 										<li><strong>Alto:</strong> {{ $p->height }}</li>
@@ -118,7 +131,7 @@
 	</div>
 </div>
 <div class="modal fade" id="seeDetails">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
