@@ -25,12 +25,25 @@ Route::group(array('before' => 'csrf'), function(){
 Route::group(array('before' => 'auth'), function(){
 	Route::get('/','HomeController@getIndex');
 	Route::get('cerrar-sesion','AuthController@getLogOut');
+		Route::get('administrador/ver-caracteristicas','PackageController@getCaracteristics');
 
 	Route::group(array('before' => 'administrador'), function(){
 		//usuarios
 		Route::get('administrador/nuevo-usuario','UserController@getNewUser');
 		Route::get('administrador/ver-usuarios','UserController@getShowUsers');
 		Route::get('administrador/ver-usuarios/{id}','UserController@getPasswordChange');
+		//aerolineas
+		Route::get('administrador/ver-aerolineas','AerolineController@getAerolines');
+		Route::get('administrador/ver-aerolineas/{id}','AerolineController@getMdfAerolinea');
+		Route::post('administrador/nueva-aerolinea/enviar','AerolineController@postNewAeroline');
+		Route::post('administrador/ver-aerolineas/{id}/enviar','AerolineController@postMdfAeroline');
+		Route::post('administrador/ver-aerolineas/eliminar','AerolineController@postElim');
+		//proveedores
+		Route::get('administrador/ver-proveedores','ProviderController@getProviders');
+		Route::get('administrador/ver-proveedores/{id}','ProviderController@getMdfProdiver');
+		Route::post('administrador/nuevo-proveedor/enviar','ProviderController@postNewProvider');
+		Route::post('administrador/ver-proveedores/{id}/enviar','ProviderController@postMdfProvider');
+		Route::post('administrador/ver-proveedores/eliminar','ProviderController@postElim');
 		//paquetes
 		Route::get('administrador/nuevo-paquete','PackageController@getNewPackage');
 		Route::get('administrador/ver-paquetes','PackageController@getShowPackages');
@@ -42,7 +55,6 @@ Route::group(array('before' => 'auth'), function(){
 		Route::get('administrador/nuevo-remitente','AdminController@getNewShipper');
 		Route::get('administrador/ver-remitentes','AdminController@getShowShippers');
 		Route::get('administrador/ver-remitentes/{id}','AdminController@getMdfShipper');
-		Route::get('administrador/ver-caracteristicas','PackageController@getCaracteristics');
 
 		Route::post('administrador/ver-remitentes/eliminar','AdminController@postElimShipper');
 		Route::group(array('before' => 'csrf'), function(){
